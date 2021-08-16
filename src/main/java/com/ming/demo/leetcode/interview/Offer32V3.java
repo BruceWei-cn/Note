@@ -18,7 +18,6 @@ public class Offer32V3 {
         while (!queue.isEmpty()) {
             LinkedList<Integer> list = new LinkedList<>();
             // BFS:遍历每一层
-
             for (int size = queue.size(); size > 0; size--) {
                 TreeNode node = queue.poll();
                 // 偶数的下一行:左->右, 奇数的下一行:右->左

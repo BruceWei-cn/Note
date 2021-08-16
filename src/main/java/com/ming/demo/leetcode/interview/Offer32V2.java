@@ -14,9 +14,9 @@ public class Offer32V2 {
         root.right.left = new TreeNode(15);
         root.right.right = new TreeNode(7);
         System.out.println(levelOrder(root));
-        /*for (int i : Offer32V1.levelOrder(root)) {
+        for (int i : Offer32V1.levelOrder(root)) {
             System.out.print("i = " + i);
-        }*/
+        }
         System.out.println(Offer32V3.levelOrder(root));
     }
 
