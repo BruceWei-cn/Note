@@ -10,6 +10,9 @@ import java.util.Objects;
 public class Offer26 {
 
 
+	/**
+	 * 判断B是否为A的子树
+	 */
 	public static void main(String[] args) {
 		TreeNode rootA = new TreeNode(3);
 		rootA.left = new TreeNode(4);
