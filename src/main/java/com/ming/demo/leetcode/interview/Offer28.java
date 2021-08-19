@@ -10,6 +10,9 @@ import java.util.Objects;
  */
 public class Offer28 {
 
+	/**
+	 * 判断二叉树是否对称
+	 */
 	public static void main(String[] args) {
 		TreeNode root = new TreeNode(1);
 		root.left = new TreeNode(2);
@@ -23,7 +26,7 @@ public class Offer28 {
 	}
 
 	/**
-	 * 判断一颗二叉树事都对称
+	 * 判断一颗二叉树是否对称
 	 * <P>!!!!利用bfs此法有误，错误解答</P>
 	 */
 	public static boolean isSymmetric(TreeNode root) {

@@ -9,6 +9,9 @@ import java.util.Objects;
  */
 public class Offer22 {
 
+	/**
+	 * 找倒数K个链表
+	 */
 	public static void main(String[] args) {
 		ListNode head = new ListNode(1);
 		head.next = new ListNode(2);

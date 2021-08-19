@@ -14,6 +14,10 @@ public class Offer47 {
 
 	}
 
+	/**
+	 * 二维数组，只能向右或者向下，寻找路径最大值
+	 * <P>也可以用来寻找路径最小值</P>
+	 */
 	public int maxValue(int[][] grid) {
 		// 行数
 		int m = grid.length;
@@ -31,6 +35,7 @@ public class Offer47 {
 		for(int i = 1; i < m; i++)
 			for(int j = 1; j < n; j++)
 				// 判断向右或是向下
+				// 路径累计和
 				grid[i][j] += Math.max(grid[i][j - 1], grid[i - 1][j]);
 		return grid[m - 1][n - 1];
 	}
