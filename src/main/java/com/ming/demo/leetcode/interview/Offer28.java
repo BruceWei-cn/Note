@@ -21,7 +21,7 @@ public class Offer28 {
 		root.right.right = new TreeNode(3);
 		root.left.left = new TreeNode(3);
 		root.left.right = new TreeNode(4);
-//		System.out.println(isSymmetric(root));
+		System.out.println(isSymmetric(root));
 		System.out.println(isSymmetric02(root));
 	}
 
