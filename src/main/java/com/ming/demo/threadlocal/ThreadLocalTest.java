@@ -5,7 +5,7 @@ import lombok.SneakyThrows;
 
 /**
  * @author: Ming
- * @Date: 2021/2/4 11:39
+ * <P>非常好的讲解ThreadLocal的文章：https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/multi-thread/%E4%B8%87%E5%AD%97%E8%AF%A6%E8%A7%A3ThreadLocal%E5%85%B3%E9%94%AE%E5%AD%97.md</P>
  */
 public class ThreadLocalTest implements Runnable {
 
