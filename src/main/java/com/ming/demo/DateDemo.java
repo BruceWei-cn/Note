@@ -15,10 +15,8 @@ public class DateDemo {
 
 	@Test
 	public void test() {
-		System.out.println(getLastTimeInterval());
 		Date date = new Date();
-		System.out.println(getTimeInterval(date));
-		System.out.println("getLastTimeInterval() = " + getLastTimeInterval());
+//		System.out.println(getTimeInterval(date));
 		System.out.println("lastMonday() = " + lastMonday());
 		System.out.println("lastSunday() = " + lastSunday());
 	}
@@ -83,21 +81,6 @@ public class DateDemo {
 		String imptimeEnd = sdf.format(cal.getTime());
 //		System.out.println("所在周星期日的日期：" + imptimeEnd);
 		return imptimeBegin + "," + imptimeEnd;
-	}
-
-	public String getLastTimeInterval() {
-		Calendar calendar1 = Calendar.getInstance();
-		Calendar calendar2 = Calendar.getInstance();
-		int dayOfWeek = calendar1.get(Calendar.DAY_OF_WEEK) - 1;
-		int offset1 = 1 - dayOfWeek;
-		int offset2 = 7 - dayOfWeek;
-		calendar1.add(Calendar.DATE, offset1 - 7);
-		calendar2.add(Calendar.DATE, offset2 - 7);
-//		System.out.println(sdf.format(calendar1.getTime()));// last Monday
-		String lastBeginDate = sdf.format(calendar1.getTime());
-//		System.out.println(sdf.format(calendar2.getTime()));// last Sunday
-		String lastEndDate = sdf.format(calendar2.getTime());
-		return lastBeginDate + "," + lastEndDate;
 	}
 
 	public synchronized String lastMonday(){
