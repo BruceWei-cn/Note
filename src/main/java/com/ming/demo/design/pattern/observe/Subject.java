@@ -12,7 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Subject {
 
-	private List<Observer> observers = new ArrayList<>();
+	/**
+	 * 于final修饰的变量来说，如果是基本数据类型的变量，则其数值一旦在初始化之后便不能更改；
+	 * 如果是引用类型的变量，是指引用变量不能变，引用变量所指向的对象中的内容还是可以改变的，也就是说在对其初始化之后便不能再让其指向另一个对象。
+	 */
+	private final List<Observer> observers = new ArrayList<>();
 	private int state;
 
 	public int getState() {
