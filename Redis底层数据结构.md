@@ -19,11 +19,11 @@
 >
 > listk可以用于实现消息队列，也可以用它的range命令来做分页查询；
 
-- ziplist:由表头和N个entry节点和压缩列表尾部表示符zlend组成的一个*<u>**连续的内存块**</u>*；主要用于存储整数和表较短的字符串
+- ziplist:由表头和N个entry节点和压缩列表尾部表示符zlend组成的一个*<u>**连续的内存块**</u>*；主要用于存储整数和表较短的字符串；
 - linkedlist:双向链表，插入删除修改前后指针即可，但查询效率为O(n)
 - 总结：
-  - quicklist就是一个双向链表结构，插入删除效率很高，查询效率O(n),但是访问两端时间复杂度O（1),对list多是poll&push操作；
-  - 每个quicklist节点就是一个ziplist,具备压缩列表特性，quicklist每个节点都是以ziplist结构保存着数据，而每个ziplist又可以包含多个entry,简单来说quicklist节点保存的是一片数据而不是一个数据；
+  - quicklist就是一个双向链表结构，插入删除效率很高，查询效率O(n),但是访问两端时间复杂度O(1),对list多是poll&push操作；
+  - 每个quicklist节点就是一个ziplist,具备压缩列表特性，<u>quicklist每个节点都是以ziplist结构保存着数据</u>，而每个ziplist又可以包含多个entry,<u>简单来说quicklist节点保存的是一片数据而不是一个数据</u>；
 
 ##### Hash:
 
