@@ -120,4 +120,14 @@ public class StringTest {
 		String[] split = s.split("\\.");
 		System.out.println("split = " + split[0]);
 	}
+
+	@Test
+	public void test09(){
+		String a = "a";
+		String b = "b";
+		String c = "ab";
+		System.out.println((a+b) == c); // false
+
+		System.out.println(("a"+ "b") == "ab"); //true
+	}
 }
