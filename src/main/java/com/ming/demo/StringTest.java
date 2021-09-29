@@ -130,4 +130,36 @@ public class StringTest {
 
 		System.out.println(("a"+ "b") == "ab"); //true
 	}
+
+	public String fuzzyUserNickname(String nickName) {
+		if (Objects.isNull(nickName)){
+			return "";
+		}
+		nickName = filterUtf8mb4(nickName);
+		StringBuilder fuzzyStr = new StringBuilder("*");
+		StringBuilder name = new StringBuilder(nickName);
+		StringBuilder fuzzyName;
+		// length >=3
+		if (name.length() >= 3) {
+			for (int i = 1; i < name.length() - 2; i++) {
+				fuzzyStr.append("*");
+			}
+			if (fuzzyStr.length() > 3) {
+				fuzzyStr = new StringBuilder("***");
+			}
+			fuzzyName = name
+					.replace(1, name.length() - 1, fuzzyStr.toString());
+			return fuzzyName.toString();
+		} else if (name.length() == 2) {
+			fuzzyName = name.deleteCharAt(1).append("*");
+			return fuzzyName.toString();
+		}
+		return fuzzyStr.toString();
+	}
+
+	@Test
+	public void fuzzyTest(){
+		String s = "ysy ઇଓ";
+		System.out.println(fuzzyUserNickname(s));
+	}
 }
