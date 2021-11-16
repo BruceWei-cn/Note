@@ -1,11 +1,11 @@
 package com.ming.demo;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
+import com.google.common.collect.Lists;
 import org.junit.Test;
 
 /**
@@ -162,4 +162,36 @@ public class StringTest {
 		String s = "ysy ઇଓ";
 		System.out.println(fuzzyUserNickname(s));
 	}
+
+	@Test
+	public void test11(){
+		/*String[] str = {"a", "b"};
+		List list = Arrays.asList(str);
+		list.add("c");*/
+		ArrayList<String> list = new ArrayList<>();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+		/*for (String s : list) {
+			if ("a".equals(s)){
+				list.remove(s);
+			}
+		}*/
+		Iterator<String> iterator = list.iterator();
+		while (iterator.hasNext()){
+			String ele = iterator.next();
+			if("a".equals(ele)){
+				iterator.remove();
+			}
+		}
+	}
+
+	@Test
+	public void test(){
+		ArrayList<String> list = new ArrayList<>();
+		list.add("a");
+		list.add("b");
+		list.remove("c");
+	}
+
 }
