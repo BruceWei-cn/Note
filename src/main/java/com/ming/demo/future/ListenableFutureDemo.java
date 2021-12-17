@@ -42,7 +42,7 @@ public class ListenableFutureDemo {
 
         // 绑定任务以及回调函数,对的带Listenable实例进行监听
         Futures.addCallback(listenableFuture, futureCallback, executorService);
-        // 此处手动关闭线程池
+        // 此处注意 线程池底层默认线程存活时间60s,所以当主线程结束后线程池若不主动关闭那么程序至少存货60s
         executorService.shutdown();
     }
 }
