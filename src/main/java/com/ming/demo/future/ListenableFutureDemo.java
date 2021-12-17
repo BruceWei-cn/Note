@@ -42,6 +42,7 @@ public class ListenableFutureDemo {
 
         // 绑定任务以及回调函数,对的带Listenable实例进行监听
         Futures.addCallback(listenableFuture, futureCallback, executorService);
+        // 此处手动关闭线程池
         executorService.shutdown();
     }
 }
