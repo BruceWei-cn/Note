@@ -147,10 +147,13 @@ public class Java8LambdaTest {
 		System.out.println("list = " + list);
 
 		List<String> strings = Arrays.stream(words)
+				// 将单词切割为一个一个字母 -> Stream<String[]>
 				.map(w -> w.split(""))
 				// flatMap将 Arrays::stream生成的单个流合并起来，扁平化为一个流
 				// Arrays::stream 返回以指定数组为源的序列流
+				// 此时内部： Stream<String>
 				.flatMap(Arrays::stream)
+				// 再将扁平化之后的整理为一个List集合
 				.collect(Collectors.toList());
 		System.out.println("strings = " + strings);
 		strings.forEach(System.out::print);
@@ -166,6 +169,7 @@ public class Java8LambdaTest {
 		list2.add(4);
 		list2.add(5);
 		list2.add(6);
+		// 将list1和list2扁平化之后再合并
 		List<Integer> result = Stream.of(list1, list2).flatMap(Collection::stream)
 				.collect(Collectors.toList());
 		System.out.println("合并之后："+result);

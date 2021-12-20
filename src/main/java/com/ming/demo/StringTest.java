@@ -204,21 +204,21 @@ public class StringTest {
 
     @Test
     public void test2() {
-        Map<String,String> map = new HashMap();
-        map.put("diffPrice","NA");
-        map.put("diffPrice1","1");
+        Map<String, String> map = new HashMap();
+        map.put("diffPrice", "NA");
+        map.put("diffPrice1", "1");
         System.out.println("map = " + map.toString());
     }
 
     @Test
     public void test3() {
-        Map<String,String> map = new HashMap();
-        map.put("diffPrice","NA");
-        map.put("diffPrice1","1");
-        map.put("diffPrice2","2");
-        map.put("diffPrice2","3");
+        Map<String, String> map = new HashMap();
+        map.put("diffPrice", "NA");
+        map.put("diffPrice1", "1");
+        map.put("diffPrice2", "2");
+        map.put("diffPrice2", "3");
         int count = 0;
-        if(count==1){
+        if (count == 1) {
 
             count++;
         }
@@ -230,10 +230,21 @@ public class StringTest {
         map.put("a3", "aa");
         map.put("a2", "bb");
         map.put("b1", "cc");
-        for (Iterator iterator = map.values().iterator(); iterator.hasNext();) {
+        for (Iterator iterator = map.values().iterator(); iterator.hasNext(); ) {
             String name = (String) iterator.next();
             System.out.println(name);
         }
     }
 
+    @Test
+    public void test12() {
+        String s = getStrOrNull("s");
+        if (Objects.nonNull(s)){
+            System.out.println("hahhaha");
+        }
+    }
+
+    public String getStrOrNull(String s) {
+        return Objects.isNull(s) ? "a" : null;
+    }
 }
