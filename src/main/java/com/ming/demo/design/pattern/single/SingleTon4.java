@@ -41,4 +41,5 @@ public class SingleTon4 {
 	 * 			获取同一单列，所以安全
 	 *
 	 */
+	public void descriptionMethod(){}
 }

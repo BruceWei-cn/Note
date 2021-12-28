@@ -11,7 +11,7 @@ public class SingleTon3 {
 		throw new IllegalStateException();
 	}
 
-	private static SingleTon3 instance = null;
+	private static volatile SingleTon3 instance;
 
 	/**
 	 * 双重锁懒汉模式：DCL

@@ -17,7 +17,7 @@ public class SingleTon1 {
 	/**
 	 * 饿汉模式
 	 * <p></p>
-	 * 静态，当；类初始化则在内存中创建对象，空间换时间，不存在线程安全
+	 * 静态，当；类初始化则在内存中创建对象，空间换时间，不存在线程安全问题
 	 */
 	private static SingleTon1 instance = new SingleTon1();
 
