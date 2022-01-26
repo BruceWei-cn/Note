@@ -3,10 +3,10 @@ package com.ming.demo;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
-import com.google.common.collect.Lists;
-import com.google.common.util.concurrent.ListenableFuture;
+import com.ming.demo.objectnulldemo.MemberBaseInfo;
+import com.ming.demo.objectnulldemo.MemberCards;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 /**
@@ -40,7 +40,7 @@ public class StringTest {
         // 城市名祛除"市"单字 eg: "上海市" -> "上海"
         String cityName = "上海市";
         if (!"".equals(cityName) && Objects.nonNull(cityName) && Objects
-            .equals(cityName.charAt(cityName.length() - 1), '市')) {
+                .equals(cityName.charAt(cityName.length() - 1), '市')) {
             cityName = cityName.substring(0, cityName.length() - 1);
         }
         System.out.println("cityName = " + cityName);
@@ -62,7 +62,7 @@ public class StringTest {
                 fuzzyStr = new StringBuilder("***");
             }
             StringBuilder replace = stringBuilder
-                .replace(1, stringBuilder.length() - 1, fuzzyStr.toString());
+                    .replace(1, stringBuilder.length() - 1, fuzzyStr.toString());
             System.out.println("replace = " + replace);
         }
 
@@ -149,7 +149,7 @@ public class StringTest {
                 fuzzyStr = new StringBuilder("***");
             }
             fuzzyName = name
-                .replace(1, name.length() - 1, fuzzyStr.toString());
+                    .replace(1, name.length() - 1, fuzzyStr.toString());
             return fuzzyName.toString();
         } else if (name.length() == 2) {
             fuzzyName = name.deleteCharAt(1).append("*");
@@ -239,12 +239,24 @@ public class StringTest {
     @Test
     public void test12() {
         String s = getStrOrNull("s");
-        if (Objects.nonNull(s)){
+        if (Objects.nonNull(s)) {
             System.out.println("hahhaha");
         }
     }
 
     public String getStrOrNull(String s) {
         return Objects.isNull(s) ? "a" : null;
+    }
+
+    @Test
+    public void test13() {
+        String a = null;
+        if (Objects.nonNull(a)) {
+            System.out.println("哈哈");
+        }
+
+        if (!StringUtils.isNotBlank(a)) {
+            System.out.println("嘿嘿");
+        }
     }
 }

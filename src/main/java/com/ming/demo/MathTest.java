@@ -19,4 +19,11 @@ public class MathTest {
 		System.out.println("i = " + i);
 	}
 
+	@Test
+	public void test02(){
+		int i = 0;
+		i = i++;
+		System.out.println("i = " + i);
+	}
+
 }
