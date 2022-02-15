@@ -17,7 +17,7 @@
 >
 > 版本3.2以后：quicklist数据结构（A doubly linked list of ziplists）由ziplist组成的双向链表，结合了ziplist+linkedList的优点
 >
-> listk可以用于实现消息队列，也可以用它的range命令来做分页查询；
+> list可以用于实现消息队列，也可以用它的range命令来做分页查询；
 
 - ziplist:由表头和N个entry节点和压缩列表尾部表示符zlend组成的一个*<u>**连续的内存块**</u>*；主要用于存储整数和表较短的字符串；
 - linkedlist:双向链表，插入删除修改前后指针即可，但查询效率为O(n)
