@@ -9,9 +9,9 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
+import com.ming.demo.design.pattern.builder.ProductTagDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-import sun.misc.Cleaner;
 
 /**
  * @author Ming
@@ -160,5 +160,16 @@ public class SimpleTest {
 		System.out.println(StringUtils.isBlank(s));
 		System.out.println(StringUtils.isNotEmpty(s));
 		System.out.println(StringUtils.isNotBlank(s));
+    }
+
+    @Test
+    public void test15(){
+        ProductTagDTO build = ProductTagDTO
+                .builder()
+                .tagImg("qqqq")
+                .tag("降价")
+                .build();
+        System.out.println("build = " + build.toString());
+        System.out.println("build.getTag() = " + build.getTag());
     }
 }
