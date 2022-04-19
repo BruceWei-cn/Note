@@ -1,17 +1,17 @@
 package com.ming.demo;
 
 import com.google.common.collect.Lists;
+import com.ming.demo.design.pattern.builder.ProductTagDTO;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
-
-import com.ming.demo.design.pattern.builder.ProductTagDTO;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
 
 /**
  * @author Ming
@@ -156,14 +156,14 @@ public class SimpleTest {
     @Test
     public void test13() {
         String s = "";
-		System.out.println(Objects.isNull(s));
-		System.out.println(StringUtils.isBlank(s));
-		System.out.println(StringUtils.isNotEmpty(s));
-		System.out.println(StringUtils.isNotBlank(s));
+        System.out.println(Objects.isNull(s));
+        System.out.println(StringUtils.isBlank(s));
+        System.out.println(StringUtils.isNotEmpty(s));
+        System.out.println(StringUtils.isNotBlank(s));
     }
 
     @Test
-    public void test15(){
+    public void test15() {
         ProductTagDTO build = ProductTagDTO
                 .builder()
                 .tagImg("qqqq")
@@ -171,5 +171,37 @@ public class SimpleTest {
                 .build();
         System.out.println("build = " + build.toString());
         System.out.println("build.getTag() = " + build.getTag());
+    }
+
+    @Test
+    public void test16() {
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("now = " + now);
+        LocalDateTime yesterday01 = now.minusDays(1);
+        System.out.println("yesterday01 = " + yesterday01);
+        LocalDateTime yesterday02 = now.minusHours(3);
+        System.out.println("yesterday02 = " + yesterday02);
+    }
+
+
+    @Test
+    public void test17() {
+        Long l1 = 21319832739173L;
+        Long l2 = 21319832739173L;
+        if (l1.equals(l2)) {
+            System.out.println("哈哈");
+        }
+        // 机酒
+        Long l3 = 4536567857152L;
+        Long B34 = 0x40000000000L;
+        judgeResult(l3, B34);
+    }
+
+    private void judgeResult(Long l3, Long B34) {
+        long l = l3 & B34;
+        boolean b1 = l == B34;
+        System.out.println("b1 = " + b1);
+        boolean b2 = B34.equals(l);
+        System.out.println("b2 = " + b2);
     }
 }
