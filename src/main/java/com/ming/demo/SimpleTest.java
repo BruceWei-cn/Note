@@ -1,8 +1,11 @@
 package com.ming.demo;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.ming.demo.design.pattern.builder.ProductTagDTO;
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.junit.Test;
 
 import java.net.InetAddress;
@@ -203,5 +206,67 @@ public class SimpleTest {
         System.out.println("b1 = " + b1);
         boolean b2 = B34.equals(l);
         System.out.println("b2 = " + b2);
+    }
+
+
+    @Test
+    public void test18() {
+        List<ProductTagDTO> list = Lists.newArrayList();
+        ProductTagDTO dto = new ProductTagDTO();
+        dto.setTag("1");
+        dto.setTagImg("hed");
+        list.add(dto);
+        dto.setTag("2");
+        dto.setTagImg("hedd");
+        list.add(dto);
+        System.out.println("dto.toString() = " + list);
+    }
+
+    @Test
+    public void test19() {
+        for (; ; ) {
+            if (true) {
+                for (; ; ) {
+                    System.out.println("haha");
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * 取并集
+     */
+    @Test
+    public void test20() {
+        String s1 = "11";
+        String s2 = "22,33,44";
+        String[] split1 = s1.split(",");
+        String[] split2 = s2.split(",");
+        HashSet<String> set = new HashSet<>();
+        Collections.addAll(set, split1);
+        Collections.addAll(set, split2);
+        System.out.println(set);
+        String s = set.toString();
+        System.out.println("s = " + s);
+    }
+
+    @Test
+    public void test21() {
+        List<Integer> list = new ArrayList<>();
+        list.add(2);
+        list.add(4);
+        list.add(6);
+
+        //allMatch在遍历list的过程中若发现一个false则立即终止遍历直接返回false,若为true则一致遍历所有直到判断所有条件全为true
+        boolean b = list.stream().allMatch(l -> {
+            if (l / 2 == 0) {
+                return false;
+            }
+            return true;
+        });
+        System.out.println("b = " + b);
+        list.add(null);
+        System.out.println("list = " + list);
     }
 }

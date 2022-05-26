@@ -5,6 +5,10 @@ import java.util.TreeMap;
 
 /**
  * 一致性hash算法不包含虚拟节点
+ * <P>虚拟节点：将每台物理机器虚拟为一组虚拟机器，将虚拟机器放置到hash环上，如果需要确定对象的机器，先确定对象的虚拟机器，再由虚拟机器确定物理机器。</P>
+ * <P>简单来说就是添加一台物理服务器，将其虚拟化为多个节点，平均分配在hash环上（当指向该虚拟节点其实就是指向该物理服务器，离散化），这样可以改善其他节点的访问压力</P>
+ *
+ * @see https://blog.csdn.net/suifeng629/article/details/81567777
  *
  * @author Ming
  */
@@ -31,6 +35,7 @@ public class ConsistentHashingWithoutVirtualNode {
 
     /**
      * 得到应当路由到的服务器节点
+     *
      * @param key 需要被存储的健
      */
     private static String getServer(String key) {
@@ -67,10 +72,7 @@ public class ConsistentHashingWithoutVirtualNode {
         hash += hash << 5;
 
         // 如果算出来的值为负数则取其绝对值
-        if (hash < 0) {
-            hash = Math.abs(hash);
-        }
-        return hash;
+        return hash < 0 ? Math.abs(hash) : hash;
     }
 
     public static void main(String[] args) {
