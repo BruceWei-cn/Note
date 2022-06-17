@@ -1,13 +1,12 @@
 package com.ming.demo;
 
-import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.ming.demo.design.pattern.builder.ProductTagDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -215,8 +214,6 @@ public class SimpleTest {
         ProductTagDTO dto = new ProductTagDTO();
         dto.setTag("1");
         dto.setTagImg("hed");
-        list.add(dto);
-        dto.setTag("2");
         dto.setTagImg("hedd");
         list.add(dto);
         System.out.println("dto.toString() = " + list);
@@ -257,6 +254,10 @@ public class SimpleTest {
         list.add(2);
         list.add(4);
         list.add(6);
+        list.add(7);
+
+        list = list.subList(0, 2);
+        System.out.println("subList = " + list);
 
         //allMatch在遍历list的过程中若发现一个false则立即终止遍历直接返回false,若为true则一致遍历所有直到判断所有条件全为true
         boolean b = list.stream().allMatch(l -> {
@@ -266,7 +267,12 @@ public class SimpleTest {
             return true;
         });
         System.out.println("b = " + b);
-        list.add(null);
-        System.out.println("list = " + list);
+
+        List<@Nullable BigDecimal> bigDecimals = Lists.newArrayList();
+        bigDecimals.add(BigDecimal.valueOf(0.5));
+        bigDecimals.add(BigDecimal.valueOf(0.5));
+        bigDecimals.add(BigDecimal.valueOf(0.5));
+        BigDecimal sum = bigDecimals.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+        System.out.println("sum = " + sum);
     }
 }

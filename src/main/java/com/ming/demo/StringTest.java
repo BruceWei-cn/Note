@@ -8,6 +8,7 @@ import com.ming.demo.objectnulldemo.MemberBaseInfo;
 import com.ming.demo.objectnulldemo.MemberCards;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
+import sun.security.provider.MD5;
 
 /**
  * @author: Ming
@@ -199,7 +200,7 @@ public class StringTest {
     public void test1() {
         int a = 5;
         int b = 6;
-        System.out.println(String.valueOf(Math.abs(a - b)));
+        System.out.println(Math.abs(a - b));
     }
 
     @Test
@@ -258,5 +259,8 @@ public class StringTest {
         if (!StringUtils.isNotBlank(a)) {
             System.out.println("嘿嘿");
         }
+        BitSet bitSet = new BitSet(0x10);
+        bitSet.set(1);
+
     }
 }
