@@ -275,4 +275,23 @@ public class SimpleTest {
         BigDecimal sum = bigDecimals.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
         System.out.println("sum = " + sum);
     }
+
+    @Test
+    public void test22() {
+        List<String> TRAIN_STATIONS_A = Arrays.asList("彬州东", "宁县", "庆阳", "曲子", "环县", "甜水堡");
+        List<String> TRAIN_STATIONS_B = Arrays.asList("银川", "河东", "灵武北", "吴忠");
+        if (TRAIN_STATIONS_A.contains("银川") && TRAIN_STATIONS_B.contains("宁县")) {
+            System.out.println("111");
+        } else if (TRAIN_STATIONS_B.contains("银川") && TRAIN_STATIONS_A.contains("宁县")) {
+            System.out.println("222");
+        }
+    }
+
+    @Test
+    public void test23() {
+        String str = "orderId\":0,\"orderstate\":6,\"paystate\":2,\"ticketType\":0,\"orderFlag\":128,\"orderFlagV2\":8589934592,\"addonProductsFlag\":0,\"holdType\":0,\"orderFlagV3\":72057594037936128,\"bookElectricAccount\":\"nohohon55\",\"grabType\":0,\"mediaClientDesc\":\"DefaultWindowOrAisle||saleMallVersionC|notSelectSeat|bAccReg|zlRO|newJavaSys|INCReturnCash\",\"smartTripType\":0,\"orderPayType\":2,\"bookSeatPayType\":1,\"bookSeatType\":1,\"claimStatus\":0,\"orderFlagV4\":1}";
+        if (str.contains("mediaClientDesc") && str.contains("INCReturnCash")) {
+            System.out.println("hahahha");
+        }
+    }
 }
