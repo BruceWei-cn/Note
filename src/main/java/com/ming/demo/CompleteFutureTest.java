@@ -68,4 +68,26 @@ public class CompleteFutureTest {
     private int getNum() {
         return 1;
     }
+
+
+    @Test
+    public void simpleDemo() throws ExecutionException, InterruptedException {
+        CompletableFuture<Integer> async = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("测试1");
+            return 1;
+        });
+        // 对于主线程来说，CompletableFuture异步操作子线程，主线程无需等待子线程结束
+        CompletableFuture<Integer> async2 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("测试2");
+            return 2;
+        });
+        // get()/ join() 方法会阻塞主线程
+//        System.out.println("async.get() = " + async.get());
+        System.out.println("async.join() = " + async.join());
+    }
 }
