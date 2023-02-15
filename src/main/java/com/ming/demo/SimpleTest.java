@@ -1,6 +1,7 @@
 package com.ming.demo;
 
 import com.google.common.collect.Lists;
+import com.google.common.util.concurrent.RateLimiter;
 import com.ming.demo.design.pattern.builder.ProductTagDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 /**
@@ -294,5 +296,25 @@ public class SimpleTest {
         if (str.contains("mediaClientDesc") && str.contains("INCReturnCash")) {
             System.out.println("hahahha");
         }
+    }
+
+    /**
+     * google-Guava下关于流量限流的小demo
+     * <P>注意点：RateLimiter属于单机限流，集群限流可以考虑redis或者sentinel</P>
+     */
+    @Test
+    public void test25() {
+        // premits = 2,意味每妙获取到的令牌数量为2；每500毫秒才可获取1个令牌；
+        RateLimiter rateLimiter = RateLimiter.create(2);
+        if (rateLimiter.tryAcquire()){
+            System.out.println("获取到");
+        }
+        if (rateLimiter.tryAcquire(500,TimeUnit.MILLISECONDS)){
+            System.out.println("获取到");
+        }
+        if (rateLimiter.tryAcquire(50, TimeUnit.MILLISECONDS)){
+            System.out.println("再次获取到");
+        }
+        System.out.println("rateLimiter.getRate() = " + rateLimiter.getRate());
     }
 }
