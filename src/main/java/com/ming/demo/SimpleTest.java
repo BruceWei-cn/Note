@@ -3,6 +3,7 @@ package com.ming.demo;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.RateLimiter;
 import com.ming.demo.design.pattern.builder.ProductTagDTO;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.junit.Test;
@@ -11,11 +12,27 @@ import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 /**
@@ -306,15 +323,156 @@ public class SimpleTest {
     public void test25() {
         // premits = 2,意味每妙获取到的令牌数量为2；每500毫秒才可获取1个令牌；
         RateLimiter rateLimiter = RateLimiter.create(2);
-        if (rateLimiter.tryAcquire()){
+        if (rateLimiter.tryAcquire()) {
             System.out.println("获取到");
         }
-        if (rateLimiter.tryAcquire(500,TimeUnit.MILLISECONDS)){
+        if (rateLimiter.tryAcquire(500, TimeUnit.MILLISECONDS)) {
             System.out.println("获取到");
         }
-        if (rateLimiter.tryAcquire(50, TimeUnit.MILLISECONDS)){
+        if (rateLimiter.tryAcquire(50, TimeUnit.MILLISECONDS)) {
             System.out.println("再次获取到");
         }
         System.out.println("rateLimiter.getRate() = " + rateLimiter.getRate());
+    }
+
+    @Test
+    public void test26() {
+        String uid = "ZM4957901211";
+        String tail = uid.substring(uid.length() - 1);
+        System.out.println("tail = " + tail);
+    }
+
+    @Test
+    public void test27() {
+        ArrayList<Integer> list = Lists.newArrayList();
+        list.add(null);
+        list.add(1);
+        list.add(null);
+        list.add(2);
+        System.out.println("list = " + list);
+        list.remove(null);
+        System.out.println("list = " + list);
+    }
+
+    @Test
+    public void StringTest() {
+        // 1. 新建一个引用s1指向堆中的对象s1,值为"CSDN哪吒"
+        String s1 = new String("CSDN") + new String("哪吒");
+        // 2. 新建一个引用s2指向堆中的对象s2,值为"CSDN哪吒"
+        String s2 = new String("CS") + new String("DN哪吒");
+        // 3. 执行s1.intern()会在字符串常量池中新建一个引用"CSDN哪吒"，该引用指向s1在堆中的地址，并新建一个引用s3指向字符串常量池中的"CSDN哪吒"
+        String s3 = s1.intern();
+        // 4. 执行s2.intern()不会在字符串常量池中创建新的引用，因为"CSDN哪吒"已存在，因此只执行了新建一个引用s4指向字符串常量池中"CSDN哪吒"的操作
+        String s4 = s2.intern();
+        // s3和s4指向的都是字符串常量池中的"CSDN哪吒"，而这个"CSDN哪吒"都指向堆中s1的地址(intern会找到常量池内最先创建并包含同样字符串的地址)
+        System.out.println(s1 == s3); // true
+        System.out.println(s1 == s4); // true
+        // s3和s4最终关联堆中的地址是对象s1
+        System.out.println(s2 == s3);// false
+        System.out.println(s2 == s4);// false
+    }
+
+    @Test
+    public void regexTest() {
+        String str = "¥90/人";
+        String regex = "\\d+"; // 匹配一个或多个数字
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(str);
+
+        if (matcher.find()) {
+            String numberStr = matcher.group(); // 提取匹配到的数字
+            int number = Integer.parseInt(numberStr); // 将字符串转换为整数
+            System.out.println("提取到的数字: " + number);
+        } else {
+            System.out.println("未找到匹配的数字");
+        }
+    }
+
+    @Test
+    public void ageTest() {
+        String dateOfBirthStr = "1995-02-08";
+        LocalDate dateOfBirth = LocalDate.parse(dateOfBirthStr, DateTimeFormatter.ISO_DATE);
+        LocalDate currentDate = LocalDate.now();
+        Period age = Period.between(dateOfBirth, currentDate);
+        int years = age.getYears();
+        System.out.println("年龄：" + years + "岁");
+    }
+
+    @Test
+    public void est() {
+        ArrayList<String> idList = new ArrayList<>();
+        idList.add("6127CIMiw6DcBrw421");
+        idList.forEach(i -> {
+            String s = halfHide(i);
+            System.out.println("s = " + s);
+        });
+    }
+
+    public static String halfHide(String idCardNo) {
+        if (idCardNo == null) {
+            return null;
+        }
+        return idCardNo.replaceAll("(\\d{4}).{11}(\\w{3})", "$1***********$2");
+    }
+
+    @Test
+    public void testC() {
+        BigDecimal price = new BigDecimal(-4);
+        if (price.compareTo(new BigDecimal(-5)) > 0) {
+            System.out.println("哈哈");
+        }
+
+    }
+
+    /**
+     * 一种简单的概率模型
+     */
+    @Test
+    public void probabilityTest() {
+        // 分子
+        double molecule = 3500;
+        // 分母
+        double denominator = 10000;
+        // 中奖概率
+        double probability = molecule / denominator;
+        int p1 = 0;
+        int p2 = 0;
+        int p3 = 0;
+        for (int i = 0; i < 10000; i++) {
+            Random randomOne = new Random();
+            // 判断是否中奖
+            double raOne = randomOne.nextDouble();
+            if (raOne > probability) {
+//                System.out.println("未中奖");
+                continue;
+            }
+            // 判断能中第几阶梯
+            // 三个等级
+            List<Integer> numberList = Arrays.asList(500, 1000, 2000);
+            // 借助TreeMap底层数据结构的特性来帮助判断命中概率和等级
+            TreeMap<Double, Integer> drawTreeMap = new TreeMap<>();
+            double sumProbability = 0;
+            int priority = 0;
+            for (Integer number : numberList) {
+                // 每个阶梯得概率
+                sumProbability = sumProbability + number / molecule;
+                drawTreeMap.put(sumProbability, ++priority);
+            }
+            Random randomTwo = new Random();
+            double raTwo = randomTwo.nextDouble();
+            SortedMap<Double, Integer> sortedMap = drawTreeMap.tailMap(raTwo);
+            if (MapUtils.isEmpty(sortedMap)) {
+                continue;
+            }
+            Integer integer = sortedMap.get(sortedMap.firstKey());
+            if (Objects.nonNull(integer) && integer.equals(1)) {
+                ++p1;
+            } else if (Objects.nonNull(integer) && integer.equals(2)) {
+                ++p2;
+            } else if (Objects.nonNull(integer) && integer.equals(3)) {
+                ++p3;
+            }
+        }
+        System.out.printf("一等奖：%s,二等奖：%s,三等奖：%s%n", p1, p2, p3);
     }
 }
