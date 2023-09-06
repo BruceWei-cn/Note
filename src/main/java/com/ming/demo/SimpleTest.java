@@ -3,7 +3,6 @@ package com.ming.demo;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.RateLimiter;
 import com.ming.demo.design.pattern.builder.ProductTagDTO;
-import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.junit.Test;
@@ -26,9 +25,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -422,57 +418,5 @@ public class SimpleTest {
             System.out.println("哈哈");
         }
 
-    }
-
-    /**
-     * 一种简单的概率模型
-     */
-    @Test
-    public void probabilityTest() {
-        // 分子
-        double molecule = 3500;
-        // 分母
-        double denominator = 10000;
-        // 中奖概率
-        double probability = molecule / denominator;
-        int p1 = 0;
-        int p2 = 0;
-        int p3 = 0;
-        for (int i = 0; i < 10000; i++) {
-            Random randomOne = new Random();
-            // 判断是否中奖
-            double raOne = randomOne.nextDouble();
-            if (raOne > probability) {
-//                System.out.println("未中奖");
-                continue;
-            }
-            // 判断能中第几阶梯
-            // 三个等级
-            List<Integer> numberList = Arrays.asList(500, 1000, 2000);
-            // 借助TreeMap底层数据结构的特性来帮助判断命中概率和等级
-            TreeMap<Double, Integer> drawTreeMap = new TreeMap<>();
-            double sumProbability = 0;
-            int priority = 0;
-            for (Integer number : numberList) {
-                // 每个阶梯得概率
-                sumProbability = sumProbability + number / molecule;
-                drawTreeMap.put(sumProbability, ++priority);
-            }
-            Random randomTwo = new Random();
-            double raTwo = randomTwo.nextDouble();
-            SortedMap<Double, Integer> sortedMap = drawTreeMap.tailMap(raTwo);
-            if (MapUtils.isEmpty(sortedMap)) {
-                continue;
-            }
-            Integer integer = sortedMap.get(sortedMap.firstKey());
-            if (Objects.nonNull(integer) && integer.equals(1)) {
-                ++p1;
-            } else if (Objects.nonNull(integer) && integer.equals(2)) {
-                ++p2;
-            } else if (Objects.nonNull(integer) && integer.equals(3)) {
-                ++p3;
-            }
-        }
-        System.out.printf("一等奖：%s,二等奖：%s,三等奖：%s%n", p1, p2, p3);
     }
 }
