@@ -28,22 +28,22 @@ public class ProbabilityTest {
     @Test
     public void simpleProbabilityOfWinningTest() {
         // 分子
-        double molecule = 35000;
+        double molecule = 30;
         // 分母
-        double denominator = 100000;
+        double denominator = 1000;
         // 中奖概率
         double probability = molecule / denominator;
         int p1 = 0;
         int p2 = 0;
         int p3 = 0;
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 1000000; i++) {
             // 判断是否中奖
             if (getDoubleRandom() > probability) {
                 continue;
             }
             // 判断能中第几阶梯
             // 三个等级
-            List<Integer> numberList = Arrays.asList(5000, 10000, 20000);
+            List<Integer> numberList = Arrays.asList(10, 10, 10);
             // 借助TreeMap底层数据结构的特性来帮助判断命中概率和等级
             TreeMap<Double, Integer> drawTreeMap = new TreeMap<>();
             double sumProbability = 0;
