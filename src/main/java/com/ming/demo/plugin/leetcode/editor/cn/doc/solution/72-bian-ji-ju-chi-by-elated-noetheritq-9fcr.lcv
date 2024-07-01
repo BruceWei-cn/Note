@@ -1,0 +1,54 @@
+> Problem: [72. 编辑距离](https://leetcode.cn/problems/edit-distance/description/)
+
+[TOC]
+
+# 思路
+
+> 自然考虑动态规划。
+> 主要是考虑word1、word2的长度分别为i、j时（起始设置为0），可以由什么问题转变
+> 而来？（当前状态如何转移到前面已知状态）
+
+1、如果word【i-1】==word【j-1】，则删掉该字符不影响变化次数。直接转到了长度分别为i-1、j-1时的问题。
+2、如果word【i-1】！=word【j-1】，那么要想word1和word2匹配，则最后一个字符要么改、要么删。
+针对改，改了之后就匹配了，就能删掉这最后一对匹配字符，问题同样转到了i-1、j-1时的问题。
+针对删，删了之后，就转到了i、j-1或者i-1、j的问题。
+
+# 解题方法
+
+> dp记录word1与word2长度分别为i、j时需要多少步。
+> 如果word1【i-1】==word2【j-1】（即最后一个字符匹配），那dp【i】【j】=dp【i-1】【j-1】
+> 如果word1【i-1】！=word2【j-1】，那dp【j】【j】可能由三种变化而来，分别是dp【i-1】【j-1】、dp【i】【j-1】、dp【i-1】【j】，取其中最小值+1即可。（因为多的那个字符必然是多余的，且增、删、改都只需要变化1步）
+
+# 复杂度
+
+时间复杂度:
+
+> 添加时间复杂度, 示例： $O(mn)$
+
+空间复杂度:
+
+> 添加空间复杂度, 示例： $O(mn)$
+
+# Code
+
+* []
+
+```Python
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        m, n = len(word1), len(word2)
+        dp = [[0]*(n+1) for _ in range(m+1)]
+        for i in range(1, m+1):
+            dp[i][0] = i
+        for i in range(1, n+1):
+            dp[0][i] = i
+        
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                if word1[i-1]==word2[j-1]:
+                    dp[i][j] = dp[i-1][j-1]
+                else:
+                    dp[i][j] = min(dp[i-1][j-1], dp[i][j-1], dp[i-1][j])+1
+        return dp[-1][-1]
+```
+
