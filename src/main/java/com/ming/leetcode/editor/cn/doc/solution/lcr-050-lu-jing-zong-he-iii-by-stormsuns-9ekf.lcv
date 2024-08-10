@@ -1,0 +1,169 @@
+# 解法一
+
+## 思路和算法
+
+定义路径的开始结点是路径中的层数最小（即和根结点距离最小）的结点，结束结点是路径中的层数最大（即和根结点距离最大）的结点。
+
+如果二叉树为空，则不存在结点值总和等于目标和的路径，返回 $0$。
+
+当二叉树不为空时，遍历二叉树中的每个结点，分别将每个结点作为开始结点，寻找所有结点值总和等于目标和的路径。寻找路径的做法是，在开始结点为根结点的子树中深度优先搜索，假设开始结点值为 $\textit{val}$，则对于开始结点的每个非空子树，子树中的每一条结点值总和等于 $\textit{targetSum} - \textit{val}$ 的路径都对应从开始结点出发的一条结点值总和等于 $\textit{targetSum}$ 的路径。
+
+由于计算非空子树中的结点值总和等于特定值的路径数目可以使用同样的方法，因此计算路径数目的过程是一个递归的过程。递归的终止条件是二叉树为空，此时路径数目是 $0$。对于其余情况，执行如下操作。
+
+1. 如果根结点值等于目标和，则以根结点为结束结点的路径为结点值总和等于目标和的路径，将路径数目加 $1$；如果根结点值不等于目标和，则路径数目不变。
+
+2. 对左子树和右子树递归地计算路径数目。
+
+## 代码
+
+* [sol1-Java]
+
+```Java
+class Solution {
+    public int pathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return 0;
+        }
+        int count = countPaths(root, targetSum);
+        count += pathSum(root.left, targetSum);
+        count += pathSum(root.right, targetSum);
+        return count;
+    }
+
+    public int countPaths(TreeNode node, long targetSum) {
+        if (node == null) {
+            return 0;
+        }
+        int count = 0;
+        if (node.val == targetSum) {
+            count++;
+        }
+        count += countPaths(node.left, targetSum - node.val);
+        count += countPaths(node.right, targetSum - node.val);
+        return count;
+    }
+}
+```
+
+* [sol1-C#]
+
+```C#
+public class Solution {
+    public int PathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return 0;
+        }
+        int count = CountPaths(root, targetSum);
+        count += PathSum(root.left, targetSum);
+        count += PathSum(root.right, targetSum);
+        return count;
+    }
+
+    public int CountPaths(TreeNode node, long targetSum) {
+        if (node == null) {
+            return 0;
+        }
+        int count = 0;
+        if (node.val == targetSum) {
+            count++;
+        }
+        count += CountPaths(node.left, targetSum - node.val);
+        count += CountPaths(node.right, targetSum - node.val);
+        return count;
+    }
+}
+```
+
+## 复杂度分析
+
+- 时间复杂度：$O(n^2)$，其中 $n$ 是二叉树的结点数。需要对每个结点计算路径数目，每个结点需要 $O(n)$ 的时间计算路径数目，因此总时间复杂度是 $O(n^2)$。
+
+- 空间复杂度：$O(n)$，其中 $n$ 是二叉树的结点数。空间复杂度主要是递归调用的栈空间，取决于二叉树的高度，最坏情况下二叉树的高度是 $O(n)$。
+
+# 解法二
+
+## 思路和算法
+
+解法一存在重复计算，因此时间复杂度较高。如果可以存储已经计算过的结果，则可以避免重复计算，降低时间复杂度。
+
+假设从根结点到结点 $\textit{node}_1$ 的路径上的结点值总和为 $\textit{sum}_1$，在同一条路径上存在不同于结点 $\textit{node}_1$ 的结点 $\textit{node}_2$，从根结点到结点 $\textit{node}_2$ 的路径上的结点值总和为 $\textit{sum}_2$，则该路径上从结点 $\textit{node}_2$ 的子结点到结点 $\textit{node}_1$ 的子路径（注意子路径包含 $\textit{node}_1$，不包含结点 $\textit{node}_2$）上的结点值总和为 $\textit{sum}_1 - \textit{sum}_2$。如果 $\textit{sum}_1 - \textit{sum}_2 = \textit{targetSum}$，则找到一条结点值总和等于 $\textit{targetSum}$ 的路径。
+
+基于上述分析，可以记录从根结点出发的路径中的每个结点值总和的出现次数，达到优化时间复杂度的目的。以下将从根结点出发的路径中的每个结点值总和称为「根路径和」。
+
+从根结点开始深度优先搜索，使用哈希表记录每个根路径和的出现次数。对于每一条从根结点出发的路径，按照层数递增的顺序依次访问每个结点，访问每个结点时更新当前结点的根路径和，并在哈希表中将当前结点的根路径和的出现次数加 $1$。对于访问到的每个结点，如果当前结点的根路径和为 $\textit{sum}$，则从哈希表中得到根路径和 $\textit{sum} - \textit{targetSum}$ 的出现次数，该出现次数即为以当前结点为结束结点的结点值总和等于 $\textit{targetSum}$ 的路径数目。在访问当前结点之后，继续访问当前结点的非空结点。
+
+实现方面有两点需要注意。
+
+- 由于结点值总和等于 $\textit{targetSum}$ 的路径可能从根结点出发，因此需要预处理空路径，空路径的结点值总和等于 $0$，在搜索之前将根路径和 $0$ 出现 $1$ 次存入哈希表。
+
+- 深度优先搜索的过程中，当访问完一个子树并退出该子树时，需要撤销对根路径和以及哈希表的更新，避免当前子树的根路径和信息对其他子树的结果造成影响。
+
+## 代码
+
+* [sol2-Java]
+
+```Java
+class Solution {
+    Map<Long, Integer> sumCountMap = new HashMap<Long, Integer>();
+
+    public int pathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return 0;
+        }
+        sumCountMap.put(0L, 1);
+        return getCounts(root, root.val, targetSum);
+    }
+
+    public int getCounts(TreeNode node, long sum, int targetSum) {
+        int count = sumCountMap.getOrDefault(sum - targetSum, 0);
+        sumCountMap.put(sum, sumCountMap.getOrDefault(sum, 0) + 1);
+        TreeNode left = node.left, right = node.right;
+        if (left != null) {
+            count += getCounts(left, sum + left.val, targetSum);
+        }
+        if (right != null) {
+            count += getCounts(right, sum + right.val, targetSum);
+        }
+        sumCountMap.put(sum, sumCountMap.get(sum) - 1);
+        return count;
+    }
+}
+```
+
+* [sol2-C#]
+
+```C#
+public class Solution {
+    IDictionary<long, int> sumCountDictionary = new Dictionary<long, int>();
+
+    public int PathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return 0;
+        }
+        sumCountDictionary.Add(0, 1);
+        return GetCounts(root, root.val, targetSum);
+    }
+
+    public int GetCounts(TreeNode node, long sum, int targetSum) {
+        int count = sumCountDictionary.ContainsKey(sum - targetSum) ? sumCountDictionary[sum - targetSum] : 0;
+        sumCountDictionary.TryAdd(sum, 0);
+        sumCountDictionary[sum]++;
+        TreeNode left = node.left, right = node.right;
+        if (left != null) {
+            count += GetCounts(left, sum + left.val, targetSum);
+        }
+        if (right != null) {
+            count += GetCounts(right, sum + right.val, targetSum);
+        }
+        sumCountDictionary[sum]--;
+        return count;
+    }
+}
+```
+
+## 复杂度分析
+
+- 时间复杂度：$O(n)$，其中 $n$ 是二叉树的结点数。每个结点都被访问一次。
+
+- 空间复杂度：$O(n)$，其中 $n$ 是二叉树的结点数。空间复杂度主要是递归调用的栈空间以及哈希表空间，取决于二叉树的高度，最坏情况下二叉树的高度是 $O(n)$。
+

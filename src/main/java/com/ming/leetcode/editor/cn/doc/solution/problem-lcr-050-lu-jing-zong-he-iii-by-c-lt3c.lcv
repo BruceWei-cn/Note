@@ -1,0 +1,47 @@
+> Problem: [LCR 050. 路径总和 III](https://leetcode.cn/problems/6eUYwP/description/)
+
+# Code
+
+* []
+
+```Java
+import java.util.HashMap;
+import java.util.Map;
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+class Solution {
+    Map<Long, Integer> sumCountMap = new HashMap<>();
+    public int pathSum(TreeNode root, long targetSum) {
+        if (root == null) {
+            return 0;
+        }
+        sumCountMap.put(0L, 1);
+        return getCounts(root, targetSum, root.val);
+
+    }
+    private int getCounts(TreeNode root, long targetSum, long sum) {
+        int cnt = sumCountMap.getOrDefault(sum - targetSum, 0);
+        sumCountMap.merge(sum, 1, Integer::sum);
+        if (root.left != null) {
+            cnt += getCounts(root.left, targetSum, sum + root.left.val);
+        }
+        if (root.right != null) {
+            cnt += getCounts(root.right, targetSum, sum + root.right.val);
+        }
+        sumCountMap.merge(sum, -1, Integer::sum);
+        return cnt;
+    }
+}
+```
+
